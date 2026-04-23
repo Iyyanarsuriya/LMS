@@ -51,7 +51,7 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-[32px]">
-          {/* Active Courses */}
+          {/* Active  */}
           <div className="xl:col-span-2 bg-white rounded-[24px] border-[1px] border-gray-100 shadow-sm overflow-hidden">
             <div className="p-[24px] flex items-center justify-between border-b-[1px] border-gray-50">
               <h2 className="text-[20px] font-bold text-gray-800">Active Courses</h2>

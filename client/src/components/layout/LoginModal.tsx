@@ -5,9 +5,10 @@ import { login } from "../../apiroutes/authApi";
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onForgotClick: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onForgotClick }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -97,7 +98,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             </div>
 
             <div className="flex justify-end px-1">
-              <button type="button" className="text-blue-600 text-xs font-bold hover:underline">
+              <button 
+                type="button"
+                onClick={onForgotClick} 
+                className="text-blue-600 text-xs font-bold hover:underline outline-none"
+              >
                 Forgot password?
               </button>
             </div>

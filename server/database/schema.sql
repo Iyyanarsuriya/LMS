@@ -71,8 +71,24 @@ CREATE TABLE IF NOT EXISTS messages (
     FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Seed Initial Users (Passwords should be hashed in production)
+-- Seed Initial Users
 INSERT IGNORE INTO users (username, email, password, role) VALUES 
 ('superadmin', 'superadmin@gmail.com', 'superadmin@123', 'superadmin'),
 ('admin', 'admin@gmail.com', 'admin@123', 'admin'),
-('student', 'student@gmail.com', 'student@123', 'student');
+('student', 'student@gmail.com', 'student@123', 'student'),
+('emma_wilson', 'emma@gmail.com', 'student@123', 'student'),
+('noah_miller', 'noah@gmail.com', 'student@123', 'student');
+
+-- Seed Courses
+INSERT IGNORE INTO courses (title, description, teacher_id, category, image_url) VALUES
+('Advanced React Patterns', 'Master hooks, render props, and higher-order components.', 2, 'Development', 'https://images.unsplash.com/photo-1633356122544-f134324a6cee'),
+('UI/UX Design Fundamentals', 'Learn the basics of user interface and experience design.', 2, 'Design', 'https://images.unsplash.com/photo-1586717791821-3f44a563de4c'),
+('Python for Data Science', 'Data analysis and visualization using Python and Pandas.', 2, 'Data Science', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71'),
+('Mobile App Development', 'Build cross-platform mobile apps with React Native.', 2, 'Development', 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c');
+
+-- Seed Enrollments
+INSERT IGNORE INTO enrollments (student_id, course_id, progress, status) VALUES
+(3, 1, 85, 'active'),
+(3, 2, 62, 'active'),
+(4, 1, 45, 'active'),
+(5, 3, 92, 'active');

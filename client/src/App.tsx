@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import ForgotPasswordPage from "./Authentication/ForgotPassword";
 import SuperAdminDashboard from "./pages/dashboards/SuperAdminDashboard";
 import AdminDashboard from "./pages/dashboards/AdminDashboard";
 import StudentDashboard from "./pages/dashboards/StudentDashboard";
@@ -9,8 +8,6 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        
         {/* Dashboard Routes */}
         <Route path="/super-admin" element={<SuperAdminDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />

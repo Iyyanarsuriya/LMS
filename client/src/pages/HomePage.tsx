@@ -14,9 +14,21 @@ import {
   BarChart3
 } from "lucide-react";
 import LoginModal from "../components/layout/LoginModal";
+import ForgotPasswordModal from "../components/layout/ForgotPasswordModal";
 
 const HomePage: React.FC = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isForgotOpen, setIsForgotOpen] = useState(false);
+
+  const openForgot = () => {
+    setIsLoginOpen(false);
+    setIsForgotOpen(true);
+  };
+
+  const backToLogin = () => {
+    setIsForgotOpen(false);
+    setIsLoginOpen(true);
+  };
   return (
     <div className="min-h-screen bg-white selection:bg-blue-100 selection:text-blue-600">
       {/* Navigation */}
@@ -247,6 +259,12 @@ const HomePage: React.FC = () => {
       <LoginModal 
         isOpen={isLoginOpen} 
         onClose={() => setIsLoginOpen(false)} 
+        onForgotClick={openForgot}
+      />
+      <ForgotPasswordModal
+        isOpen={isForgotOpen}
+        onClose={() => setIsForgotOpen(false)}
+        onBackToLogin={backToLogin}
       />
     </div>
   );

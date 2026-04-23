@@ -17,7 +17,18 @@ export const addStudent = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     console.error("Error adding student:", error);
-    res.status(500).json({ message: "Failed to add student", error: error.message });
+    
+    // Handle duplicate entry (MySQL error 1062)
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(400).json({ 
+        message: "Username or Email already exists" 
+      });
+    }
+
+    res.status(500).json({ 
+      message: "Internal server error while adding student", 
+      error: error.message 
+    });
   }
 };
 

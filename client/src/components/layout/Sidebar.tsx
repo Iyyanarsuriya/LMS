@@ -86,10 +86,22 @@ const Sidebar: React.FC<SidebarProps> = ({ role, isOpen, onClose }) => {
       </nav>
 
       <div className="p-4 border-t border-gray-50">
+        <div className="flex items-center gap-3 px-4 py-4 mb-2 bg-gray-50/50 rounded-2xl">
+          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">
+            {JSON.parse(localStorage.getItem("user") || "{}").full_name?.charAt(0) || "U"}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-gray-800 truncate">
+              {JSON.parse(localStorage.getItem("user") || "{}").full_name || "User"}
+            </p>
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">{role}</p>
+          </div>
+        </div>
         <button 
           onClick={() => {
             localStorage.clear();
-            window.location.href = "/login";
+            sessionStorage.clear();
+            window.location.href = "/";
           }}
           className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-red-500 hover:bg-red-50 transition-all duration-200"
         >

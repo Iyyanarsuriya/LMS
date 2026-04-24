@@ -4,23 +4,37 @@ import pool from "../config/db.js";
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  let role = "student";
-  let message = "Login successful";
+  try {
+    const [rows]: any = await pool.query(
+      "SELECT id, full_name, username, email, role, status FROM users WHERE email = ? AND password = ?",
+      [email, password]
+    );
 
-  // Mock logic for roles
-  if (email === "superadmin@gmail.com" && password === "superadmin@123") {
-    role = "superadmin";
-  } else if (email === "admin@gmail.com" && password === "admin@123") {
-    role = "admin";
-  } else if (email === "student@gmail.com" && password === "student@123") {
-    role = "student";
+    if (rows.length === 0) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const user = rows[0];
+
+    if (user.status !== 'active') {
+      return res.status(403).json({ message: `Account is ${user.status}. Please contact support.` });
+    }
+
+    res.json({ 
+      message: "Login successful", 
+      token: "mock-jwt-token-" + user.id, // Still mock JWT for now
+      user: {
+        id: user.id,
+        full_name: user.full_name,
+        username: user.username,
+        email: user.email,
+        role: user.role
+      } 
+    });
+  } catch (error: any) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Internal server error during login" });
   }
-
-  res.json({ 
-    message, 
-    token: "mock-jwt-token",
-    user: { email, role } 
-  });
 };
 
 export const signup = async (req: Request, res: Response) => {

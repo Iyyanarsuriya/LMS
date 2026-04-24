@@ -11,3 +11,7 @@ router.post("/", authorizeRoles(["admin", "superadmin"]), addStudent);
 router.get("/", authorizeRoles(["admin", "superadmin"]), getStudents);
 
 export default router;
+
+
+
+

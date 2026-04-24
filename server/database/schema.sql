@@ -5,10 +5,12 @@ USE lms_db;
 -- Users Table
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role ENUM('superadmin', 'admin', 'student') NOT NULL DEFAULT 'student',
+    status ENUM('active', 'inactive', 'suspended') DEFAULT 'active',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -72,12 +74,12 @@ CREATE TABLE IF NOT EXISTS messages (
 );
 
 -- Seed Initial Users
-INSERT IGNORE INTO users (username, email, password, role) VALUES 
-('superadmin', 'superadmin@gmail.com', 'superadmin@123', 'superadmin'),
-('admin', 'admin@gmail.com', 'admin@123', 'admin'),
-('student', 'student@gmail.com', 'student@123', 'student'),
-('emma_wilson', 'emma@gmail.com', 'student@123', 'student'),
-('noah_miller', 'noah@gmail.com', 'student@123', 'student');
+INSERT IGNORE INTO users (full_name, username, email, password, role, status) VALUES 
+('Super Administrator', 'superadmin', 'superadmin@gmail.com', 'superadmin@123', 'superadmin', 'active'),
+('System Administrator', 'admin', 'admin@gmail.com', 'admin@123', 'admin', 'active'),
+('John Student', 'student', 'student@gmail.com', 'student@123', 'student', 'active'),
+('Emma Wilson', 'emma_wilson', 'emma@gmail.com', 'student@123', 'student', 'active'),
+('Noah Miller', 'noah_miller', 'noah@gmail.com', 'student@123', 'student', 'active');
 
 -- Seed Courses
 INSERT IGNORE INTO courses (title, description, teacher_id, category, image_url) VALUES

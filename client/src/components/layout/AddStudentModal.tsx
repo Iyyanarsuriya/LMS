@@ -9,6 +9,7 @@ interface AddStudentModalProps {
 }
 
 const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onSuccess }) => {
+  const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,12 +28,13 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onSu
       const role = user.role;
 
       await axiosInstance.post("/students", 
-        { username, email, password },
+        { full_name: fullName, username, email, password },
         { headers: { "x-user-role": role } }
       );
 
       onSuccess();
       onClose();
+      setFullName("");
       setUsername("");
       setEmail("");
       setPassword("");
@@ -68,12 +70,24 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onSu
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="relative">
               <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               <input
                 type="text"
                 placeholder="Full Name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-transparent rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all text-sm"
+              />
+            </div>
+
+            <div className="relative">
+              <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <input
+                type="text"
+                placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required

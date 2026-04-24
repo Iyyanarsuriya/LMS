@@ -2,22 +2,46 @@ import React, { useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import { GraduationCap, BookOpen, Clock, CheckCircle2, MoreVertical, UserPlus } from "lucide-react";
 import AddStudentModal from "../../components/layout/AddStudentModal";
+import axiosInstance from "../../apiroutes/axiosInstance";
 
 const AdminDashboard: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [students, setStudents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchStudents = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const response = await axiosInstance.get("/students", {
+        headers: { "x-user-role": user.role }
+      });
+      setStudents(response.data);
+    } catch (err) {
+      console.error("Failed to fetch students", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchStudents();
+  }, []);
+
   const stats = [
-    { label: "Enrolled Students", value: "3,240", change: "+8%", icon: GraduationCap, color: "bg-blue-500" },
+    { label: "Enrolled Students", value: loading ? "..." : students.length.toString(), change: "+8%", icon: GraduationCap, color: "bg-blue-500" },
     { label: "Total Courses", value: "145", change: "+3", icon: BookOpen, color: "bg-indigo-500" },
     { label: "Pending Reviews", value: "28", change: "Action Needed", icon: Clock, color: "bg-rose-500" },
     { label: "Completion Rate", value: "76%", change: "+4%", icon: CheckCircle2, color: "bg-emerald-500" },
   ];
+
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   return (
     <DashboardLayout role="admin">
       <div className="space-y-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+            <h1 className="text-3xl font-bold text-gray-800">Welcome, {user.full_name || "Admin"}</h1>
             <p className="text-gray-500 mt-1">Manage your courses and student progress</p>
           </div>
           <button 
@@ -51,7 +75,7 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-[32px]">
-          {/* Active  */}
+          {/* Active Courses */}
           <div className="xl:col-span-2 bg-white rounded-[24px] border-[1px] border-gray-100 shadow-sm overflow-hidden">
             <div className="p-[24px] flex items-center justify-between border-b-[1px] border-gray-50">
               <h2 className="text-[20px] font-bold text-gray-800">Active Courses</h2>
@@ -86,28 +110,30 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Pending Approvals */}
+          {/* Real Recent Students */}
           <div className="bg-white rounded-[24px] border-[1px] border-gray-100 shadow-sm p-[24px]">
-            <h2 className="text-[20px] font-bold text-gray-800 mb-[24px]">Pending Approvals</h2>
+            <h2 className="text-[20px] font-bold text-gray-800 mb-[24px]">Recent Students</h2>
             <div className="space-y-[24px]">
-              {[
-                { name: "Alex Rivera", task: "Assignment: Final Project", time: "15m ago" },
-                { name: "Jessica Smith", task: "Course Registration: Python", time: "1h ago" },
-                { name: "Tom Hardy", task: "Refund Request", time: "3h ago" },
-                { name: "Maria Garcia", task: "Assignment: Intro to HTML", time: "5h ago" },
-              ].map((item, i) => (
-                <div key={i} className="flex flex-col gap-[4px] pb-[16px] border-b-[1px] border-gray-50 last:border-0 last:pb-0">
-                  <div className="flex justify-between items-start">
-                    <span className="font-bold text-gray-800 text-[14px]">{item.name}</span>
-                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">{item.time}</span>
+              {loading ? (
+                <div className="text-center py-8 text-gray-400 text-sm italic">Loading students...</div>
+              ) : students.length === 0 ? (
+                <div className="text-center py-8 text-gray-400 text-sm italic">No students registered yet.</div>
+              ) : (
+                students.slice(0, 5).map((student, i) => (
+                  <div key={i} className="flex items-center gap-4 pb-4 border-b border-gray-50 last:border-0 last:pb-0">
+                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xs">
+                      {student.full_name?.charAt(0)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-gray-800 truncate">{student.full_name}</p>
+                      <p className="text-xs text-gray-400 truncate">{student.email}</p>
+                    </div>
+                    <div className="px-2 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold rounded-full uppercase">
+                      {student.status}
+                    </div>
                   </div>
-                  <p className="text-[12px] text-gray-500">{item.task}</p>
-                  <div className="flex gap-[8px] mt-[12px]">
-                    <button className="flex-1 py-[8px] bg-blue-50 text-blue-600 rounded-[12px] text-[11px] font-bold hover:bg-blue-100 transition-all active:scale-[0.98]">Approve</button>
-                    <button className="flex-1 py-[8px] bg-gray-50 text-gray-400 rounded-[12px] text-[11px] font-bold hover:bg-gray-100 transition-all active:scale-[0.98]">Reject</button>
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -115,7 +141,7 @@ const AdminDashboard: React.FC = () => {
       <AddStudentModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        onSuccess={() => alert("Student added successfully!")} 
+        onSuccess={fetchStudents} 
       />
     </DashboardLayout>
   );

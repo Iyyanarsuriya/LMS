@@ -5,6 +5,7 @@ import AddStudentModal from "../../components/layout/AddStudentModal";
 
 const SuperAdminDashboard: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
   const stats = [
     { label: "Total Users", value: "12,450", change: "+12%", icon: Users, color: "bg-blue-500" },
     { label: "Active Courses", value: "856", change: "+5%", icon: BookOpen, color: "bg-purple-500" },
@@ -17,7 +18,7 @@ const SuperAdminDashboard: React.FC = () => {
       <div className="space-y-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Super Admin Overview</h1>
+            <h1 className="text-3xl font-bold text-gray-800">Welcome, {user.full_name || "Super Admin"}</h1>
             <p className="text-gray-500 mt-1">Global system performance and management</p>
           </div>
           <button 

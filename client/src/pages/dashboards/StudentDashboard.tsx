@@ -3,6 +3,7 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 import { BookOpen, Trophy, Clock, Target, Play, ChevronRight } from "lucide-react";
 
 const StudentDashboard: React.FC = () => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
   const stats = [
     { label: "Enrolled Courses", value: "8", icon: BookOpen, color: "bg-blue-500" },
     { label: "Certificates Earned", value: "3", icon: Trophy, color: "bg-amber-500" },
@@ -15,7 +16,7 @@ const StudentDashboard: React.FC = () => {
       <div className="space-y-[32px]">
         <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-[32px] p-[24px] sm:p-[40px] text-white relative overflow-hidden shadow-xl shadow-blue-200 active:scale-[0.99] transition-all">
           <div className="relative z-10 max-w-xl">
-            <h1 className="text-[28px] sm:text-[40px] font-bold mb-[16px] leading-tight">Welcome back, Student! 👋</h1>
+            <h1 className="text-[28px] sm:text-[40px] font-bold mb-[16px] leading-tight">Welcome back, {user.full_name || "Student"}! 👋</h1>
             <p className="text-blue-100 text-[14px] sm:text-[18px] mb-[32px] opacity-90">You've completed 75% of your weekly study goal. Keep pushing forward!</p>
             <button className="bg-white text-blue-600 px-[32px] py-[12px] rounded-[16px] font-bold hover:bg-blue-50 transition-all flex items-center gap-[8px] shadow-lg active:scale-95">
               <Play size={18} fill="currentColor" />

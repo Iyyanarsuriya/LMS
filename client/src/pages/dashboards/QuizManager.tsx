@@ -220,7 +220,8 @@ const QuizManager: React.FC = () => {
                     <input 
                       type="number" 
                       value={timeLimit}
-                      onChange={(e) => setTimeLimit(parseInt(e.target.value))}
+                      onChange={(e) => setTimeLimit(parseInt(e.target.value) || 0)}
+                      onFocus={(e) => e.target.select()}
                       className="w-full pl-[44px] pr-[16px] py-[12px] sm:pl-[52px] sm:pr-[20px] sm:py-[16px] rounded-[14px] sm:rounded-[18px] border-[1.5px] border-gray-100 focus:outline-none focus:ring-[4px] focus:ring-blue-500/10 focus:border-blue-500 transition-all text-[15px] sm:text-[16px] font-bold"
                     />
                     <Clock size={18} className="absolute left-[16px] top-1/2 -translate-y-1/2 text-gray-400" />

@@ -88,6 +88,10 @@ function App() {
             } 
           />
           
+          {/* Role-specific catch alls */}
+          <Route path="/admin/*" element={<Navigate to="/admin" replace />} />
+          <Route path="/student/*" element={<Navigate to="/student" replace />} />
+          
           {/* Public Route */}
           <Route path="/" element={<HomePage />} />
           

@@ -34,12 +34,14 @@ const Sidebar: React.FC<SidebarProps> = ({ role, isOpen, onClose }) => {
       { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
       { name: "Course Management", path: "/admin/courses", icon: BookOpen },
       { name: "Student List", path: "/admin/students", icon: GraduationCap },
-      { name: "Reports", path: "/admin/reports", icon: FileText },
+      { name: "Quiz Management", path: "/admin/quizzes", icon: FileText },
+      { name: "Reports", path: "/admin/reports", icon: BarChart3 },
     ],
     student: [
       { name: "Dashboard", path: "/student", icon: LayoutDashboard },
       { name: "My Courses", path: "/student/courses", icon: BookOpen },
       { name: "Assignments", path: "/student/assignments", icon: FileText },
+      { name: "Quizzes", path: "/student/quizzes", icon: ShieldCheck },
       { name: "Messages", path: "/student/messages", icon: MessageSquare },
     ],
   };

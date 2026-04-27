@@ -7,6 +7,12 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const SuperAdminDashboard = lazy(() => import("./pages/dashboards/SuperAdminDashboard"));
 const AdminDashboard = lazy(() => import("./pages/dashboards/AdminDashboard"));
 const StudentDashboard = lazy(() => import("./pages/dashboards/StudentDashboard"));
+const QuizManager = lazy(() => import("./pages/dashboards/QuizManager"));
+const QuizList = lazy(() => import("./pages/quizzes/QuizList"));
+const QuizTaking = lazy(() => import("./pages/quizzes/QuizTaking"));
+const QuizResult = lazy(() => import("./pages/quizzes/QuizResult"));
+
+// Premium Loading Fallback
 
 // Premium Loading Fallback
 const PageLoader = () => (
@@ -34,7 +40,7 @@ function App() {
             } 
           />
           <Route 
-            path="/admin/*" 
+            path="/admin" 
             element={
               <ProtectedRoute requiredRole="admin">
                 <AdminDashboard />
@@ -42,10 +48,42 @@ function App() {
             } 
           />
           <Route 
-            path="/student/*" 
+            path="/admin/quizzes" 
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <QuizManager />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/student" 
             element={
               <ProtectedRoute requiredRole="student">
                 <StudentDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/student/quizzes" 
+            element={
+              <ProtectedRoute requiredRole="student">
+                <QuizList />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/student/quiz/:id" 
+            element={
+              <ProtectedRoute requiredRole="student">
+                <QuizTaking />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/student/quiz/result/:attemptId" 
+            element={
+              <ProtectedRoute requiredRole="student">
+                <QuizResult />
               </ProtectedRoute>
             } 
           />

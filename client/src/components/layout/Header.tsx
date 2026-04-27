@@ -6,6 +6,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  
   return (
     <header className="h-[80px] bg-white/80 backdrop-blur-md border-b-[1px] border-gray-100 flex items-center justify-between px-[16px] sm:px-[24px] lg:px-[32px] sticky top-0 z-40">
       <div className="flex items-center gap-[16px]">
@@ -34,11 +36,11 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
         <div className="flex items-center gap-[12px] sm:gap-[20px] pl-[12px] sm:pl-[24px] border-l-[1px] border-gray-100">
           <div className="text-right hidden sm:block">
-            <p className="text-[14px] font-bold text-gray-900 leading-none">John Doe</p>
-            <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.05em] mt-[4px]">Admin</p>
+            <p className="text-[14px] font-bold text-gray-900 leading-none">{user.full_name || "Guest User"}</p>
+            <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.05em] mt-[4px]">{user.role || "Guest"}</p>
           </div>
-          <div className="w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] bg-gradient-to-br from-blue-500 to-blue-700 rounded-[14px] sm:rounded-[16px] flex items-center justify-center text-white shadow-[0_8px_20px_-6px_rgba(37,99,235,0.25)] active:scale-95 transition-all cursor-pointer hover:shadow-[0_12px_24px_-8px_rgba(37,99,235,0.4)]">
-            <User size={22} />
+          <div className="w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] bg-gradient-to-br from-blue-500 to-blue-700 rounded-[14px] sm:rounded-[16px] flex items-center justify-center text-white shadow-[0_8px_20px_-6px_rgba(37,99,235,0.25)] active:scale-95 transition-all cursor-pointer hover:shadow-[0_12px_24px_-8px_rgba(37,99,235,0.4)] font-bold text-[18px]">
+            {user.full_name ? user.full_name.charAt(0) : <User size={22} />}
           </div>
         </div>
       </div>

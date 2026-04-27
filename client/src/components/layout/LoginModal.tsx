@@ -81,6 +81,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onForgotClick 
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
+                autoFocus
                 className="w-full pl-14 pr-5 py-4 bg-gray-50 border border-transparent rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all text-sm"
               />
             </div>

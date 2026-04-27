@@ -25,7 +25,7 @@ const QuizManager: React.FC = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [courseId, setCourseId] = useState("");
-  const [timeLimit, setTimeLimit] = useState(30);
+  const [timeLimit, setTimeLimit] = useState<number | "">(30);
   const [scheduledAt, setScheduledAt] = useState("");
   const [expiresAt, setExpiresAt] = useState("");
   const [status, setStatus] = useState("draft");
@@ -123,7 +123,7 @@ const QuizManager: React.FC = () => {
         title,
         description,
         course_id: parseInt(courseId),
-        time_limit: timeLimit,
+        time_limit: timeLimit === "" ? 0 : timeLimit,
         scheduled_at: scheduledAt ? scheduledAt.replace("T", " ") + ":00" : null,
         expires_at: expiresAt ? expiresAt.replace("T", " ") + ":00" : null,
         status,
@@ -220,7 +220,10 @@ const QuizManager: React.FC = () => {
                     <input 
                       type="number" 
                       value={timeLimit}
-                      onChange={(e) => setTimeLimit(parseInt(e.target.value) || 0)}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setTimeLimit(val === "" ? "" : parseInt(val));
+                      }}
                       onFocus={(e) => e.target.select()}
                       className="w-full pl-[44px] pr-[16px] py-[12px] sm:pl-[52px] sm:pr-[20px] sm:py-[16px] rounded-[14px] sm:rounded-[18px] border-[1.5px] border-gray-100 focus:outline-none focus:ring-[4px] focus:ring-blue-500/10 focus:border-blue-500 transition-all text-[15px] sm:text-[16px] font-bold"
                     />

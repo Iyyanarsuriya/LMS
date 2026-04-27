@@ -34,7 +34,7 @@ export const addStudent = async (req: Request, res: Response) => {
 
 export const getStudents = async (req: Request, res: Response) => {
   try {
-    const [rows] = await pool.query("SELECT id, full_name, username, email, status, created_at FROM users WHERE role = 'student'");
+    const [rows] = await pool.query("SELECT id, full_name, username, email, status, created_at FROM users WHERE role = 'student' ORDER BY created_at DESC");
     res.json(rows);
   } catch (error: any) {
     res.status(500).json({ message: "Failed to fetch students" });

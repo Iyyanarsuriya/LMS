@@ -88,6 +88,54 @@ function App() {
             } 
           />
           
+          <Route 
+            path="/admin/students" 
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/courses" 
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/reports" 
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/student/courses" 
+            element={
+              <ProtectedRoute requiredRole="student">
+                <StudentDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/student/assignments" 
+            element={
+              <ProtectedRoute requiredRole="student">
+                <StudentDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/student/messages" 
+            element={
+              <ProtectedRoute requiredRole="student">
+                <StudentDashboard />
+              </ProtectedRoute>
+            } 
+          />
           {/* Role-specific catch alls */}
           <Route path="/admin/*" element={<Navigate to="/admin" replace />} />
           <Route path="/student/*" element={<Navigate to="/student" replace />} />

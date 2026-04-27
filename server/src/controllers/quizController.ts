@@ -61,15 +61,14 @@ export const getQuizzes = async (req: Request, res: Response) => {
     let params: any[] = [];
 
     if (role === 'student') {
-      // Students only see active or scheduled quizzes for their enrolled courses
+      // Students see all active or scheduled quizzes (bypassing course enrollment check for now)
       query = `
         SELECT q.*, c.title as course_title 
         FROM quizzes q 
-        JOIN courses c ON q.course_id = c.id
-        JOIN enrollments e ON c.id = e.course_id
-        WHERE e.student_id = ? AND (q.status = 'active' OR (q.status = 'draft' AND q.scheduled_at <= NOW()))
+        LEFT JOIN courses c ON q.course_id = c.id
+        WHERE q.status = 'active' OR (q.status = 'draft' AND q.scheduled_at <= NOW())
       `;
-      params = [studentId];
+      // params = [studentId]; // Not needed if we don't filter by student enrollment
     }
 
     const [rows] = await pool.query(query, params);

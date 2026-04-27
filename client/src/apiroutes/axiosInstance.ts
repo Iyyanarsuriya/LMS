@@ -48,7 +48,7 @@ axiosInstance.interceptors.request.use(
         }
 
         // Prevent browser caching for authentication requests
-        const isAuthRequest = config.url.includes('/login') || config.url.includes('/me');
+        const isAuthRequest = config.url && (config.url.includes('/login') || config.url.includes('/me'));
         if (isAuthRequest) {
             config.params = { ...config.params, _t: Date.now() };
         }

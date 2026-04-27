@@ -49,54 +49,54 @@ const Sidebar: React.FC<SidebarProps> = ({ role, isOpen, onClose }) => {
   const currentMenu = menuItems[role] || [];
 
   return (
-    <div className={`h-screen w-[256px] bg-white border-r-[1px] border-gray-100 flex flex-col fixed left-0 top-0 z-[50] transition-transform duration-300 lg:translate-x-0 ${
+    <div className={`h-screen w-[260px] bg-white border-r-[1px] border-gray-100 flex flex-col fixed left-0 top-0 z-[50] transition-transform duration-[300ms] lg:translate-x-0 ${
       isOpen ? "translate-x-0" : "-translate-x-full"
     }`}>
       <div className="p-[24px] flex items-center justify-between">
         <div className="flex items-center gap-[12px]">
-          <div className="w-[40px] h-[40px] bg-blue-600 rounded-[12px] flex items-center justify-center shadow-lg shadow-blue-200">
+          <div className="w-[44px] h-[44px] bg-blue-600 rounded-[14px] flex items-center justify-center shadow-[0_8px_20px_-6px_rgba(37,99,235,0.3)]">
             <ShieldCheck className="text-white" size={24} />
           </div>
-          <span className="font-bold text-[20px] text-gray-800 tracking-tight">LMS Pro</span>
+          <span className="font-black text-[22px] text-gray-900 tracking-[-0.02em]">LMS Pro</span>
         </div>
         <button 
           onClick={onClose}
-          className="lg:hidden p-[8px] text-gray-400 hover:bg-gray-50 rounded-[10px]"
+          className="lg:hidden p-[10px] text-gray-400 hover:bg-gray-50 rounded-[12px] transition-colors"
         >
-          <X size={20} />
+          <X size={22} />
         </button>
       </div>
 
-      <nav className="flex-1 px-4 py-4 space-y-1">
+      <nav className="flex-1 px-[16px] py-[16px] space-y-[4px] overflow-y-auto">
         {currentMenu.map((item) => {
           const isActive = location.pathname === item.path;
           return (
             <Link
               key={item.name}
               to={item.path}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+              className={`flex items-center gap-[12px] px-[16px] py-[12px] rounded-[14px] transition-all duration-[200ms] group ${
                 isActive 
-                  ? "bg-blue-50 text-blue-600 font-semibold shadow-sm" 
-                  : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  ? "bg-blue-600 text-white font-bold shadow-[0_4px_12px_-2px_rgba(37,99,235,0.2)]" 
+                  : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
               }`}
             >
-              <item.icon size={20} />
-              <span className="text-[14px]">{item.name}</span>
+              <item.icon size={20} className={isActive ? "text-white" : "text-gray-400 group-hover:text-blue-600"} />
+              <span className="text-[15px]">{item.name}</span>
             </Link>
           );
         })}
       </nav>
 
-      <div className="p-4 border-t border-gray-50">
-        <div className="flex items-center gap-3 px-4 py-4 mb-2 bg-gray-50/50 rounded-2xl">
-          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">
+      <div className="p-[20px] border-t-[1px] border-gray-50">
+        <div className="flex items-center gap-[12px] px-[16px] py-[16px] mb-[12px] bg-gray-50/80 rounded-[20px] border-[1px] border-gray-100/50">
+          <div className="w-[42px] h-[42px] rounded-[12px] bg-blue-100 flex items-center justify-center text-blue-600 font-black text-[14px] shadow-sm">
             {JSON.parse(localStorage.getItem("user") || "{}").full_name?.charAt(0) || "U"}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-gray-800 truncate">
+            <p className="text-[14px] font-bold text-gray-900 truncate">
               {JSON.parse(localStorage.getItem("user") || "{}").full_name || "User"}
             </p>
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">{role}</p>
+            <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.05em] mt-[1px]">{role}</p>
           </div>
         </div>
         <button 
@@ -105,10 +105,10 @@ const Sidebar: React.FC<SidebarProps> = ({ role, isOpen, onClose }) => {
             sessionStorage.clear();
             window.location.href = "/";
           }}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-red-500 hover:bg-red-50 transition-all duration-200"
+          className="flex items-center gap-[12px] px-[16px] py-[14px] w-full rounded-[14px] text-rose-500 font-bold text-[14px] hover:bg-rose-50 transition-all duration-[200ms]"
         >
           <LogOut size={20} />
-          <span className="text-[14px] font-semibold">Logout</span>
+          <span>Logout</span>
         </button>
       </div>
     </div>
